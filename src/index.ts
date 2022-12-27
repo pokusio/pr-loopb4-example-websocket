@@ -6,11 +6,7 @@ export * from './websocket.server';
 export * from './decorators/websocket.decorator';
 export * from './websocket-controller-factory';
 
-export async function main(options: ApplicationConfig = {
-  port: 3000,
-  host: "localhost",
-  address: "127.0.0.1"
-}) {
+export async function main(options: ApplicationConfig = {}) {
   const app = new WebSocketDemoApplication(options);
 
   console.log(' HAZE listening on PORT = %s', app.httpServer.port);
