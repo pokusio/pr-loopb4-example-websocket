@@ -1,9 +1,10 @@
-import {Constructor, Context} from '@loopback/context';
-import {HttpServer} from '@loopback/http-server';
-import {Server, ServerOptions, Socket} from 'socket.io';
-import {getWebSocketMetadata} from './decorators/websocket.decorator';
-import {WebSocketControllerFactory} from './websocket-controller-factory';
-import SocketIOServer = require('socket.io');
+import { Constructor, Context } from '@loopback/context';
+import { HttpServer } from '@loopback/http-server';
+import { Server, ServerOptions, Socket } from 'socket.io';
+import { getWebSocketMetadata } from './decorators/websocket.decorator';
+import { WebSocketControllerFactory } from './websocket-controller-factory';
+// const { SocketIOServer } = require('socket.io');
+// const { SocketIOServer } = require('socket.io')(httpServer);
 
 const debug = require('debug')('loopback:websocket');
 
@@ -13,6 +14,11 @@ export type SockIOMiddleware = (
   fn: (err?: any) => void,
 ) => void;
 
+
+
+const { SocketIOAdapter } = require("socket.io-adapter"); //, https://github.com/socketio/socket.io-adapter
+const { SocketIOParser } = require("socket.io-parser"); //,
+
 /**
  * A websocket server
  */
@@ -21,10 +27,24 @@ export class WebSocketServer extends Context {
 
   constructor(
     public readonly httpServer: HttpServer,
-    private options: ServerOptions = {},
-  ) {
+    /**
+     * private options: ServerOptions = {},   THROWS :
+     *  is missing the following properties
+     *  from type 'ServerOptions':
+     *    path, serveClient, adapter, parser, connectTimeout
+     */
+    private options: ServerOptions = {
+      path: "/socket.io/", // supposed to be the default value anyway
+      serveClient: false,
+      adapter: SocketIOAdapter, // https://github.com/socketio/socket.io-adapter
+      // adapter: {},
+      parser: SocketIOParser, //
+      // parser: {},
+      connectTimeout: 45000
+    }) {
     super();
-    this.io = SocketIOServer(options);
+    // this.io = SocketIOServer(httpServer, options);
+    this.io = require('socket.io')(httpServer);
   }
 
   /**

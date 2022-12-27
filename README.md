@@ -20,10 +20,45 @@ Middleware can be registered at global and namespace level.
 
 ## Basic use
 
+* install globally `typescript`, `loopback-cli`, and `pnpm`
+```bash
+pnpm i
+pnpm start
+```
+
+* Then test the connection to the Websocket :
+
+```bash
+
+# --- Test websockets
+export HAZE_HOST=localhost
+export HAZE_PORT=3000
+curl -ivvv \
+     --include \
+     --no-buffer \
+     --header "Connection: Upgrade" \
+     --header "Upgrade: websocket" \
+     --header "Host: ${HAZE_HOST}:${HAZE_PORT}" \
+     --header "Origin: http://localhost:42123" \
+     --header "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" \
+     --header "Sec-WebSocket-Version: 13" \
+     http://${HAZE_HOST}:${HAZE_PORT}/chats/1
+
+curl -ivvv -N \
+     -H "Connection: Upgrade" \
+     -H "Upgrade: websocket" \
+     -H "Host: echo.websocket.org" \
+     -H "Origin: https://www.websocket.org" https://echo.websocket.org
+
+
+```
+
+<!--
 ```
 npm start
 Open your browser to http://localhost:3000
 ```
+-->
 
 ## Websocket controllers
 

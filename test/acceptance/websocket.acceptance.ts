@@ -3,10 +3,11 @@
 // This file is licensed under the MIT License.
 // License text available at https://opensource.org/licenses/MIT
 
-import * as io from 'socket.io-client';
+// import * as io from 'socket.io-client';
+import io from 'socket.io-client';
 const pEvent = require('p-event');
-import {WebSocketDemoApplication} from '../..';
-import {expect} from '@loopback/testlab';
+import { WebSocketDemoApplication } from '../..';
+import { expect } from '@loopback/testlab';
 
 describe('WebSocketDemoApplication', () => {
   let app: WebSocketDemoApplication;
@@ -23,7 +24,7 @@ describe('WebSocketDemoApplication', () => {
   });
 
   async function givenApp() {
-    app = new WebSocketDemoApplication({websocket: {port: 0}});
+    app = new WebSocketDemoApplication({ websocket: { port: 0 } });
     await app.start();
   }
 });

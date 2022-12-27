@@ -1,9 +1,9 @@
-import {Application, ApplicationConfig} from '@loopback/core';
-import {HttpServer} from '@loopback/http-server';
+import { Application, ApplicationConfig } from '@loopback/core';
+import { HttpServer } from '@loopback/http-server';
 import * as express from 'express';
 import * as path from 'path';
-import {WebSocketController} from './controllers';
-import {WebSocketServer} from './websocket.server';
+import { WebSocketController } from './controllers';
+import { WebSocketServer } from './websocket.server';
 
 // tslint:disable:no-any
 
@@ -18,7 +18,8 @@ export class WebSocketDemoApplication extends Application {
      * Create an Express app to serve the home page
      */
     const expressApp = express();
-    const root = path.resolve(__dirname, '../../public');
+    const root = path.resolve(__dirname, './../../public');
+    console.info(` Haze : this is the Express Static root Folder : ${root}`)
     expressApp.use('/', express.static(root));
 
     // Create an http server backed by the Express app
